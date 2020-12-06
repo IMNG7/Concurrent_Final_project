@@ -4,25 +4,30 @@
 using namespace std;
 #include<atomic>
 
-
+class ThreadInfo;
+class tnode
+{
+public:
+	int val;
+	tnode* down;
+};
 class tstack
 {
-	class tnode
-	{
-	public:
-		tnode(int v)
-		{
-			val=v;
-		}
-		int val;
-		tnode* down;
-	};
 public:
 	atomic<tnode*> top;
 	void push(int val);
+	bool push_elim(ThreadInfo *p);
 	int pop(void);
+	bool pop_elim(ThreadInfo *p);
 	void display();
 };
-
+class ThreadInfo
+{
+public:
+	uint id;
+	char op;
+	tnode* cell;
+	int spin;
+};
 
 #endif
