@@ -10,16 +10,13 @@
 using namespace std;
 
 extern tstack S;
+int num_threads = 20;
 sgl_stack stack;
 node* head;
 sgl_queue queue;
-atomic<ThreadInfo*> location_fc[21]={};
-// atomic<int> collision[6]={};
-// int him,pos;
+atomic<ThreadInfo*> *location_fc;
 mutex mtx_fc;
-// ThreadInfo *q;
-//ThreadInfo* null_ptr = NULL;
-int num_threads = 20;
+
 
 void StackOp_fc(ThreadInfo* p)
 {	
@@ -27,6 +24,7 @@ void StackOp_fc(ThreadInfo* p)
 	mypid = p->id;
 	if(TryPerformStackOp_fc(p)==false)
 	{
+		if(p!=NULL);
 		LesOP_fc(p,mypid);
 	}
 	return;
@@ -38,36 +36,6 @@ void LesOP_fc(ThreadInfo *p,int pid)
 	{	atomic<int> mypid;
 		mypid.store(pid);
 		location_fc[mypid].store(p);
-		// pos = GetPosition();
-		// ThreadInfo* q = new ThreadInfo();
-		// him = collision[pos];
-		// while(!collision[pos].compare_exchange_strong(him,mypid))
-		// 	him = collision[pos];
-		// if(him!=EMPTY)
-		// {	
-		// 	q=location[him];
-		// 	if(q!=NULL && q->id == him && q->op!=p->op)
-		// 	{	
-		// 		if(location[mypid].compare_exchange_strong(p,NULL))
-		// 		{	
-		// 			if(TryCollision(p,q,mypid) == true)
-		// 			{	
-		// 				cout<<"\n\rCollision Achieved";
-		// 				return;
-		// 			}
-		// 			else
-		// 			{
-		// 				goto stack;
-		// 			}
-		// 		}
-		// 		else
-		// 		{	
-		// 			if(p!=NULL)
-		// 			FinishCollision(p,mypid);
-		// 			return;
-		// 		}
-		// 	}
-		// }
 		delay_fc();
 		if(!location_fc[mypid].compare_exchange_strong(p,NULL))
 		{	
@@ -133,33 +101,7 @@ void FinishCollision_fc(ThreadInfo *p,int mypid)
 		location_fc[mypid] = NULL ;
 	}
 }
-// bool TryCollision(ThreadInfo*p,ThreadInfo *q,int mypid)
-// {	
-// 	if(p->op == PUSH)
-// 	{	
-// 		if(location[him].compare_exchange_strong(q,p))
-// 			return true;
-// 		else
-// 			return false;
-// 	}
-// 	if(p->op == POP)
-// 	{	
-// 		if(location[him].compare_exchange_strong(q,NULL))
-// 		{
-// 			p->cell = q->cell;
-// 			location[mypid] = NULL;
-// 			return true;
-// 		}
-// 		else
-// 			return false;
-// 	}
-// }
 
-// int GetPosition()
-// {	
-// 	srand(time(0));
-// 	return ((rand() % 5)+1);
-// }
 void delay_fc()
 {
 	for(int i=0;i<100000;i++);

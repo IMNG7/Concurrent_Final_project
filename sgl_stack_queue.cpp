@@ -7,7 +7,7 @@
 #include "treiber.h"
 using namespace std;
 mutex mtx;
-
+extern int count;
 void sgl_stack::stack_push(node** head,int d)
 {	mtx.lock();
 	node* new_node = new node(d);
@@ -32,7 +32,7 @@ void sgl_stack::stack_push_fc(node** head,ThreadInfo* p)
 	node* new_node = new node(p->cell->val);
 	new_node->next = *head;
 	*head = new_node;
-	// cout<<p->cell->val<<"\t";
+	count++;
 }
 int sgl_stack::stack_pop_fc(node** head)
 {
@@ -42,6 +42,7 @@ int sgl_stack::stack_pop_fc(node** head)
 	*head = (*head)->next;
 	int popped = temp ->val;
 	free(temp);
+	count--;
 	return(popped);
 }
 

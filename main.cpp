@@ -9,12 +9,17 @@
 #include <omp.h>
 #include <atomic>
 using namespace std;
-
+extern atomic<ThreadInfo*> *location_fc;
 extern int num_threads;
+int count = 0;
 int main()
 {
 int filler = 1000;
 num_threads = omp_get_max_threads();
+location_fc = new atomic<ThreadInfo*> [num_threads];
+//ThreadInfo* temp_loc = new ThreadInfo[num_threads];
+
+
 while(filler != 0){
 
 	#pragma omp parallel default(none) shared(filler) 
@@ -42,6 +47,6 @@ while(filler != 0){
 	//cout<<filler;
 	filler = filler - 1;			
 	}
-
+	//cout<<count;
 	return 0;
 }
