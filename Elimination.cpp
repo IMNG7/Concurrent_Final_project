@@ -7,7 +7,7 @@
 using namespace std;
 
 extern tstack S;
-atomic<ThreadInfo*> location[21]={};
+atomic<ThreadInfo*> *location;
 atomic<int> collision[6]={};
 int him,pos;
 // ThreadInfo *q;
@@ -37,13 +37,14 @@ void LesOP(ThreadInfo *p,int pid)
 		if(him!=EMPTY)
 		{	
 			q=location[him];
+			// if(q==NULL || p==NULL)
+			// 	cout<<"\n\rNULLBC";
 			if(q!=NULL && q->id == him && q->op!=p->op)
 			{	
 				if(location[mypid].compare_exchange_strong(p,NULL))
 				{	
 					if(TryCollision(p,q,mypid) == true)
-					{	
-						cout<<"\n\rCollision Achieved";
+					{		
 						return;
 					}
 					else

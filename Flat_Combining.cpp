@@ -24,7 +24,6 @@ void StackOp_fc(ThreadInfo* p)
 	mypid = p->id;
 	if(TryPerformStackOp_fc(p)==false)
 	{
-		if(p!=NULL);
 		LesOP_fc(p,mypid);
 	}
 	return;

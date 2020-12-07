@@ -10,13 +10,15 @@
 #include <atomic>
 using namespace std;
 extern atomic<ThreadInfo*> *location_fc;
+extern atomic<ThreadInfo*> *location;
 extern int num_threads;
 int count = 0;
 int main()
 {
 int filler = 1000;
 num_threads = omp_get_max_threads();
-location_fc = new atomic<ThreadInfo*> [num_threads];
+location_fc = new atomic<ThreadInfo*> [num_threads+2];
+location = new atomic<ThreadInfo*> [num_threads+2];
 //ThreadInfo* temp_loc = new ThreadInfo[num_threads];
 
 
@@ -34,15 +36,8 @@ while(filler != 0){
 		thread1->cell->down = NULL;
 		thread2->id = omp_get_thread_num()+1;
 		thread2->op = POP_FC;
-		StackOp_fc(thread1);
-		StackOp_fc(thread2);
-		// if(TryStackOper(thread1) == false){
-		// 			elimination_oper(push_thread_info);
-		// }
-
-		// if(TryStackOper(pop_thread_info) == false){
-		// 			elimination_oper(pop_thread_info);
-		// }
+		StackOp(thread1);
+		StackOp(thread2);
 	}
 	//cout<<filler;
 	filler = filler - 1;			
