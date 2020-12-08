@@ -12,11 +12,10 @@ using namespace std;
 extern tstack S;
 int num_threads = 20;
 sgl_stack stack;
-node* head;
+node_t* head_fc;
 sgl_queue queue;
 atomic<ThreadInfo*> *location_fc;
 mutex mtx_fc;
-
 
 void StackOp_fc(ThreadInfo* p)
 {	
@@ -54,12 +53,12 @@ bool TryPerformStackOp_fc(ThreadInfo *p)
 	{
 		if(p->op == PUSH_FC)
 		{
-			stack.stack_push_fc(&head,p);
+			stack.stack_push_fc(&head_fc,p);
 			location_fc[p->id].store(NULL);
 		}
 		else if(p->op == POP_FC)
 		{
-			stack.stack_pop_fc(&head);
+			stack.stack_pop_fc(&head_fc);
 			location_fc[p->id].store(NULL);
 		}
 		for(int i=1;i<num_threads;i++)
@@ -70,13 +69,13 @@ bool TryPerformStackOp_fc(ThreadInfo *p)
 				if(temp!=NULL && temp->op == PUSH_FC && (i==temp->id))
 				{
 					// cout<<"\n\rDoing Remaing Threads Tasks";
-					stack.stack_push_fc(&head,temp);
+					stack.stack_push_fc(&head_fc,temp);
 					location_fc[i].store(NULL);
 				}
 				else if(temp!=NULL && temp->op == POP_FC && (i==temp->id))
 				{
 					// cout<<"\n\rDoing Remaing Threads Tasks";
-					stack.stack_pop_fc(&head);
+					stack.stack_pop_fc(&head_fc);
 					location_fc[i].store(NULL);
 				}
 			}

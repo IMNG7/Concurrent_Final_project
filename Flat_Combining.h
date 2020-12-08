@@ -3,7 +3,7 @@
 
 #include "treiber.h"
 
-#define EMPTY 0
+#define Empty 0
 #define POP_FC 3
 #define PUSH_FC 4
 

@@ -3,19 +3,19 @@
 #Description: Makefile for the Lab0 for ECEN 5033
 #Author: Nitik Gupta
 
-DEPS = main.o treiber.o M_S_Queue.o Elimination.o sgl_stack_queue.o Flat_Combining.o
-SRC = main.cpp treiber.cpp M_S_Queue.cpp Elimination.cpp sgl_stack_queue.cpp Flat_Combining.cpp
-INCLUDES = treiber.h M_S_Queue.h Elimination.h Basket_Queue.h sgl_stack_queue.h Flat_Combining.h
+DEPS = main.o treiber.o M_S_Queue.o Elimination.o sgl_stack_queue.o Flat_Combining.o Basket_Queue.o
+SRC = main.cpp treiber.cpp M_S_Queue.cpp Elimination.cpp sgl_stack_queue.cpp Flat_Combining.cpp Basket_Queue.cpp
+INCLUDES = treiber.h M_S_Queue.h Elimination.h Basket_Queue.h sgl_stack_queue.h Flat_Combining.h Basket_Queue.h
 CC = g++
 LIBS = -pthread -fopenmp -latomic
-CFLAGS = -g -O3
+CFLAGS = -g -O0
 
 all: mysort
 
 mysort: ${DEPS}
-	g++ -o mysort -pthread -fopenmp -g ${SRC}
+	g++ -o mysort -pthread -fopenmp -g  ${SRC}
 
-main.o: main.cpp
+main.o: main.cpp main.h
 	g++ -o main.o -pthread -fopenmp -g -c main.cpp
 
 treiber.o: treiber.cpp treiber.h
@@ -33,8 +33,8 @@ Elimination.o: Elimination.cpp Elimination.h
 Flat_Combining.o: Flat_Combining.cpp Flat_Combining.h
 	g++ -o Flat_Combining.o -pthread -fopenmp -g -c Flat_Combining.cpp
 
-#Basket_Queue.o: Basket_Queue.cpp Basket_Queue.h
-#	g++ -o Basket_Queue.o -fopenmp -g -c Basket_Queue.cpp
+Basket_Queue.o: Basket_Queue.cpp Basket_Queue.h
+	g++ -o Basket_Queue.o -fopenmp -g -c Basket_Queue.cpp
 
 clean :
 	rm mysort *.o

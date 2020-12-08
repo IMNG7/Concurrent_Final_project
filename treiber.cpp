@@ -5,10 +5,10 @@
 #include "Elimination.h"
 using namespace std;
 
-tstack S;
+extern tstack S;
 void tstack::push(int val)
-{	tnode* t;
-	tnode* n;
+{	tnode* t = new tnode;
+	tnode* n = new tnode;
 	n->val = val;
 	do
 	{

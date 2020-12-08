@@ -8,7 +8,7 @@
 using namespace std;
 
 extern sgl_stack S;
-node* head_e;
+node_t* head_e;
 atomic<ThreadInfo*> *location;
 atomic<int> collision[6]={};
 int him,pos;
@@ -36,7 +36,7 @@ void LesOP(ThreadInfo *p,int pid)
 		him = collision[pos];
 		while(!collision[pos].compare_exchange_strong(him,mypid))
 			him = collision[pos];
-		if(him!=EMPTY)
+		if(him!=Empty)
 		{	
 			q=location[him];
 			// if(q==NULL || p==NULL)

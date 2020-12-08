@@ -8,18 +8,18 @@
 using namespace std;
 mutex mtx;
 extern int count;
-void sgl_stack::stack_push(node** head,int d)
+void sgl_stack::stack_push(node_t** head,int d)
 {	mtx.lock();
-	node* new_node = new node(d);
+	node_t* new_node = new node_t(d);
 	new_node->next = *head;
 	*head = new_node;
 	mtx.unlock();
 }
-int sgl_stack::stack_pop(node** head)
+int sgl_stack::stack_pop(node_t** head)
 {	mtx.lock();
 	if(!(*head))
 		return NULL;
-	node* temp = *head;
+	node_t* temp = *head;
 	*head = (*head)->next;
 	int popped = temp ->val;
 	free(temp);
@@ -27,18 +27,18 @@ int sgl_stack::stack_pop(node** head)
 	return(popped);
 }
 
-void sgl_stack::stack_push_fc(node** head,ThreadInfo* p)
+void sgl_stack::stack_push_fc(node_t** head,ThreadInfo* p)
 {	
-	node* new_node = new node(p->cell->val);
+	node_t* new_node = new node_t(p->cell->val);
 	new_node->next = *head;
 	*head = new_node;
 	count++;
 }
-int sgl_stack::stack_pop_fc(node** head)
+int sgl_stack::stack_pop_fc(node_t** head)
 {
 	if(!(*head))
 		return NULL;
-	node* temp = *head;
+	node_t* temp = *head;
 	*head = (*head)->next;
 	int popped = temp ->val;
 	free(temp);
@@ -46,10 +46,10 @@ int sgl_stack::stack_pop_fc(node** head)
 	return(popped);
 }
 
-bool sgl_stack::stack_push_elim(node** head,ThreadInfo* p)
+bool sgl_stack::stack_push_elim(node_t** head,ThreadInfo* p)
 {	if(mtx.try_lock())
 	{
-		node* new_node = new node(p->cell->val);
+		node_t* new_node = new node_t(p->cell->val);
 		new_node->next = *head;
 		*head = new_node;
 		count++;
@@ -58,13 +58,13 @@ bool sgl_stack::stack_push_elim(node** head,ThreadInfo* p)
 	else
 		return false;
 }
-bool sgl_stack::stack_pop_elim(node** head,ThreadInfo* p)
+bool sgl_stack::stack_pop_elim(node_t** head,ThreadInfo* p)
 {	
 	if(mtx.try_lock())
 	{
 		if(!(*head))
 			return NULL;
-		node* temp = *head;
+		node_t* temp = *head;
 		*head = (*head)->next;
 		int popped = temp ->val;
 		free(temp);
@@ -76,7 +76,7 @@ bool sgl_stack::stack_pop_elim(node** head,ThreadInfo* p)
 
 void sgl_queue::queue_push(int x)
 {	mtx.lock();
-	node* temp = new node(x);
+	node_t* temp = new node_t(x);
 	if(rear == NULL)
 	{
 		front = rear = temp;
@@ -89,12 +89,12 @@ int sgl_queue::queue_pop()
 {	mtx.lock();
 	if(front == NULL)
 		return NULL;
-	node* temp = front;
+	node_t* temp = front;
 	front = front->next;
 	if(front == NULL)
 		rear = NULL;
 	int temp_val = temp->val;
-	delete(temp);
+//	delete(temp);
 	mtx.unlock();
 	return temp_val;
 
@@ -102,7 +102,7 @@ int sgl_queue::queue_pop()
 
 void sgl_queue::queue_push_fc(int x)
 {	
-	node* temp = new node(x);
+	node_t* temp = new node_t(x);
 	if(rear == NULL)
 	{
 		front = rear = temp;
@@ -114,7 +114,7 @@ int sgl_queue::queue_pop_fc()
 {
 	if(front == NULL)
 		return NULL;
-	node* temp = front;
+	node_t* temp = front;
 	front = front->next;
 	if(front == NULL)
 		rear = NULL;

@@ -11,13 +11,31 @@ Author: Abhijeet Dutt Srivastava
 #include <time.h>
 #include <omp.h>
 #include <iostream>
-#include "Basket_Queue.h"
 
 using namespace std;
 
 #define EMPTY -1
 #define MAX_HOPS 3
 
+class pointer_t;
+
+class node{
+public:
+	int val;
+	pointer_t *next;
+	node(int number){val = number;}
+};
+
+class pointer_t{
+public:
+	node* get_ptr();
+	int get_tag();
+	int get_deleted();
+	bool CAS(unsigned long long cp1, unsigned long long cp2);
+	pointer_t(){}
+	pointer_t(node *pointer,bool d,unsigned int tag);
+	atomic <unsigned long long> cnt_ptr_var;
+};
 
 pointer_t::pointer_t(node* pointer,bool d ,unsigned int tag){
 
@@ -51,7 +69,42 @@ bool pointer_t::CAS(unsigned long long cp1, unsigned long long cp2){
 	}
 	return false;
 }
+
+
+// class node;
+
+// class pointer_t{
+// public:
+// pointer_t(){
+// 	ptr = NULL;
+// 	deleted = 0;
+// 	tag =0;
+// }
+// node *ptr,
+// bool deleted,
+// unsigned int tag
+// }
+
+
+
+class queue{
+public:
+
+pointer_t head;
+pointer_t tail;
+
+queue(){}
+
+//void free_chain(queue *q, pointer_t *head, pointer_t *new_head);
+//void backoff_scheme();
+};
+
 queue Que;
+
+void init_queue();
+bool enqueue(int val,queue* q);
+int dequeue();
+void free_chain(pointer_t head, pointer_t new_head);
 
 void reclaim_node(node *t){
 delete (t);
@@ -63,8 +116,14 @@ void backoff_scheme(){
 }
 
 void free_chain(pointer_t *head, pointer_t *new_head){
+	//cout<<"\n\rInside Free Chain";
+	//<new_head.ptr,0,head->tag+1>
 	pointer_t temp_node1 (new_head->get_ptr(),0,head->get_tag()+1);
+	// temp_node1->ptr = new_head->ptr;
+	// temp_node1->deleted = 0;
+	// temp_node1->tag = head->tag+1;
 	pointer_t nxt (NULL,0,0);
+	//<new_head.ptr,0,head->tag+1>
 	if(Que.head.CAS(head->cnt_ptr_var.load(),temp_node1.cnt_ptr_var.load())){
 		while(head->get_ptr() != new_head->get_ptr()){
 			nxt.cnt_ptr_var.store(head->get_ptr()->next->cnt_ptr_var.load());
@@ -82,44 +141,53 @@ node *nd = new node(0);
 nd->next = new pointer_t(NULL,0,0); 
 
 pointer_t empty(nd,0,0);
+//pointer_t new_p (nd,0,0);
+
 Que.head.cnt_ptr_var.store(empty.cnt_ptr_var.load());
 Que.tail.cnt_ptr_var.store(empty.cnt_ptr_var.load());
+
 }
 
 bool enqueue(int val){
 
 node *nd = new node(val); // new node tob enqueued
-
+//node *nd = comb_ptr(node* pointer,bool d ,unsigned int tag)
 
 pointer_t nxt (NULL,0,0);
 pointer_t t (NULL,0,0);
 
 nd->next = new pointer_t(NULL,0,0);
 while(1){	
-
+	//t->cnt_ptr_var.store(q->tail->cnt_ptr_var.load()); //snapshot of original tail
 	t.cnt_ptr_var.store(Que.tail.cnt_ptr_var.load());
-
+	//next = tail->ptr->next.load();
 	nxt.cnt_ptr_var.store(t.get_ptr()->next->cnt_ptr_var.load());
-
+	//next->cnt_ptr_var.store(t->get_ptr()->next->cnt_ptr_var.load());
+//node *pointer,bool d,unsigned int tag
 	if(t.cnt_ptr_var.load() == Que.tail.cnt_ptr_var.load()){
 		if(nxt.get_ptr() == NULL){
 			
 			pointer_t temp_node1 (NULL,0,t.get_tag()+2);
 			
-
+			//nd->next->cnt_ptr_var.store(temp_node1.cnt_ptr_var.load()); //<NULL, 0, tail.tag+2>
 			
 			nd->next->cnt_ptr_var.store(temp_node1.cnt_ptr_var.load());
 
-
+			//printf("nd->val %d \n",nd->next->get_tag());
 			pointer_t temp_node (nd,0,t.get_tag()+1);
 
-
-			if(t.get_ptr()->next->CAS(nxt.cnt_ptr_var.load(),temp_node.cnt_ptr_var.load())){
+			//printf("t tag %d \n",t->get_tag());
+			if(t.get_ptr()->next->CAS(nxt.cnt_ptr_var.load(),temp_node.cnt_ptr_var.load())){ //<nd,0,tail.tag+1>	
+				//printf("CAS1 Success \n");
+				//pointer_t temp_node2 (nd,0,t->get_tag()+1);
+				//cout<<q->tail->cnt_ptr_var<<"\n\r"<<t->cnt_ptr_var<<"\n\r"<<temp_node2.cnt_ptr_var;
 				Que.tail.CAS(t.cnt_ptr_var.load(),temp_node.cnt_ptr_var.load());//??<nd,0,tail.tag+1>
+				
 				
 				return true;
 			}
 			nxt.cnt_ptr_var.store(t.get_ptr()->next->cnt_ptr_var.load());
+
 			
 			while(nxt.get_tag() == t.get_tag()+1 && !(nxt.get_deleted())){
 
@@ -155,12 +223,12 @@ pointer_t iter (NULL,0,0);
 int value;
 
 
+
 int hops;
 while(1){
-	//printf("dequeue \n");
 	h.cnt_ptr_var.store(Que.head.cnt_ptr_var.load());
 	t.cnt_ptr_var.store(Que.tail.cnt_ptr_var.load());	
-	//nxt = head->ptr->next;
+
 	nxt.cnt_ptr_var.store(h.get_ptr()->next->cnt_ptr_var.load());
 
 	
@@ -174,7 +242,7 @@ while(1){
 				nxt.cnt_ptr_var.store(nxt.get_ptr()->next->cnt_ptr_var.load());
 			}	
 			pointer_t temp_node (nxt.get_ptr(),0,t.get_tag()+1);
-			Que.tail.CAS(t.cnt_ptr_var.load(),temp_node.cnt_ptr_var.load());
+			Que.tail.CAS(t.cnt_ptr_var.load(),temp_node.cnt_ptr_var.load());//<nxt.ptr,0,tail->tag+1>
 
 			}
 			else{
@@ -193,21 +261,44 @@ while(1){
 						continue; 
 					}
 					else if(iter.get_ptr() == t.get_ptr()){
-
+						printf("freechain1 \n");
 						free_chain(&h,&iter);
 					}
 					else{
 						value = nxt.get_ptr()->val;
 							pointer_t temp_node2 (nxt.get_ptr(),1,nxt.get_tag()+1);
-						if(iter.get_ptr()->next->CAS(nxt.cnt_ptr_var.load(),temp_node2.cnt_ptr_var.load())){
+						if(iter.get_ptr()->next->CAS(nxt.cnt_ptr_var.load(),temp_node2.cnt_ptr_var.load())){//<next.ptr,1,next.tag+1>
 							if(hops >= MAX_HOPS){
+								printf("freechain2 \n");
 								free_chain(&h,&nxt);
 							}
 							return value;
 						}
 					backoff_scheme();		
 					}
+				
 			}
 		}
 	}
+}
+
+
+int main(){
+	
+init_queue();
+
+int filler = 10;
+
+while(filler != 0){
+
+	#pragma omp parallel default(none) shared(filler) 
+	{
+		#pragma omp barrier
+
+		enqueue(filler);			
+		printf("%d \n",dequeue());
+	}
+	filler = filler - 1;			
+	}
+	return 0;
 }
