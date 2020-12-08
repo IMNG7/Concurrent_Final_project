@@ -59,7 +59,7 @@ delete (t);
 
 void backoff_scheme(){
 
-	for(int i=0;i<100000;i++);
+	for(int i=0;i<10000;i++);
 }
 
 void free_chain(pointer_t *head, pointer_t *new_head){
@@ -68,7 +68,7 @@ void free_chain(pointer_t *head, pointer_t *new_head){
 	if(Que.head.CAS(head->cnt_ptr_var.load(),temp_node1.cnt_ptr_var.load())){
 		while(head->get_ptr() != new_head->get_ptr()){
 			nxt.cnt_ptr_var.store(head->get_ptr()->next->cnt_ptr_var.load());
-			reclaim_node(head->get_ptr());
+			//reclaim_node(head->get_ptr());
 			head->cnt_ptr_var.store(nxt.cnt_ptr_var.load());
 		}
 	}	
