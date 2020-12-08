@@ -3,10 +3,12 @@
 #include <iostream>
 #include "treiber.h"
 #include "Elimination.h"
+#include "sgl_stack_queue.h"
 #include <ctime>
 using namespace std;
 
-extern tstack S;
+extern sgl_stack S;
+node* head_e;
 atomic<ThreadInfo*> *location;
 atomic<int> collision[6]={};
 int him,pos;
@@ -77,11 +79,11 @@ bool TryPerformStackOp(ThreadInfo *p)
 {	
 	if(p->op == PUSH)
 	{
-		return S.push_elim(p);
+		return S.stack_push_elim(&head_e,p);
 	}
 	if(p->op == POP)
 	{
-		return S.pop_elim(p);
+		return S.stack_pop_elim(&head_e,p);
 	}
 }
 

@@ -46,6 +46,34 @@ int sgl_stack::stack_pop_fc(node** head)
 	return(popped);
 }
 
+bool sgl_stack::stack_push_elim(node** head,ThreadInfo* p)
+{	if(mtx.try_lock())
+	{
+		node* new_node = new node(p->cell->val);
+		new_node->next = *head;
+		*head = new_node;
+		count++;
+		return true;
+	}
+	else
+		return false;
+}
+bool sgl_stack::stack_pop_elim(node** head,ThreadInfo* p)
+{	
+	if(mtx.try_lock())
+	{
+		if(!(*head))
+			return NULL;
+		node* temp = *head;
+		*head = (*head)->next;
+		int popped = temp ->val;
+		free(temp);
+		count--;
+		return true;
+	}
+	return false;
+}
+
 void sgl_queue::queue_push(int x)
 {	mtx.lock();
 	node* temp = new node(x);

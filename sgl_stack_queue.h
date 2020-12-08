@@ -15,8 +15,10 @@ class sgl_stack	//TODO: Get somechanges for this class or just remove it.
 {	public:
 	void stack_push(node** head,int d);
 	void stack_push_fc(node** head,ThreadInfo *p);
+	bool stack_push_elim(node** head,ThreadInfo *p);
 	int stack_pop(node** head);
 	int stack_pop_fc(node** head);
+	bool stack_pop_elim(node** head,ThreadInfo *p);
 };
 
 class sgl_queue
