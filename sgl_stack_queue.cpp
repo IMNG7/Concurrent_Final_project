@@ -94,4 +94,3 @@ int sgl_queue::queue_pop_fc()
 	delete(temp);
 	return temp_val;
 }
-

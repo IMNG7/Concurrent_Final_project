@@ -1,0 +1,237 @@
+==32679== Memcheck, a memory error detector
+==32679== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==32679== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==32679== Command: ./test
+==32679== Parent PID: 31634
+==32679== 
+--32679-- 
+--32679-- Valgrind options:
+--32679--    --leak-check=full
+--32679--    --show-leak-kinds=all
+--32679--    --track-origins=yes
+--32679--    --verbose
+--32679--    --log-file=valgrind-out.txt
+--32679-- Contents of /proc/version:
+--32679--   Linux version 5.4.0-56-generic (buildd@lgw01-amd64-038) (gcc version 7.5.0 (Ubuntu 7.5.0-3ubuntu1~18.04)) #62~18.04.1-Ubuntu SMP Tue Nov 24 10:07:50 UTC 2020
+--32679-- 
+--32679-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-rdtscp-sse3-avx-avx2-bmi
+--32679-- Page sizes: currently 4096, max supported 4096
+--32679-- Valgrind library directory: /usr/lib/valgrind
+--32679-- Reading syms from /home/nitik/College Material/Conurrent/Final Project/test
+--32679-- Reading syms from /lib/x86_64-linux-gnu/ld-2.27.so
+--32679--   Considering /lib/x86_64-linux-gnu/ld-2.27.so ..
+--32679--   .. CRC mismatch (computed 6c71a321 wanted b59d24a6)
+--32679--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/ld-2.27.so ..
+--32679--   .. CRC is valid
+--32679-- Reading syms from /usr/lib/valgrind/memcheck-amd64-linux
+--32679--   Considering /usr/lib/valgrind/memcheck-amd64-linux ..
+--32679--   .. CRC mismatch (computed 41ddb025 wanted 9972f546)
+--32679--    object doesn't have a symbol table
+--32679--    object doesn't have a dynamic symbol table
+--32679-- Scheduler: using generic scheduler lock implementation.
+--32679-- Reading suppressions file: /usr/lib/valgrind/default.supp
+==32679== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-32679-by-nitik-on-???
+==32679== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-32679-by-nitik-on-???
+==32679== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-32679-by-nitik-on-???
+==32679== 
+==32679== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==32679== don't want to do, unless you know exactly what you're doing,
+==32679== or are doing some strange experiment):
+==32679==   /usr/lib/valgrind/../../bin/vgdb --pid=32679 ...command...
+==32679== 
+==32679== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==32679==   /path/to/gdb ./test
+==32679== and then give GDB the following command
+==32679==   target remote | /usr/lib/valgrind/../../bin/vgdb --pid=32679
+==32679== --pid is optional if only one valgrind process is running
+==32679== 
+--32679-- REDIR: 0x4020d40 (ld-linux-x86-64.so.2:strlen) redirected to 0x580608c1 (???)
+--32679-- REDIR: 0x4020b20 (ld-linux-x86-64.so.2:index) redirected to 0x580608db (???)
+--32679-- Reading syms from /usr/lib/valgrind/vgpreload_core-amd64-linux.so
+--32679--   Considering /usr/lib/valgrind/vgpreload_core-amd64-linux.so ..
+--32679--   .. CRC mismatch (computed 50df1b30 wanted 4800a4cf)
+--32679--    object doesn't have a symbol table
+--32679-- Reading syms from /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so
+--32679--   Considering /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so ..
+--32679--   .. CRC mismatch (computed f893b962 wanted 95ee359e)
+--32679--    object doesn't have a symbol table
+==32679== WARNING: new redirection conflicts with existing -- ignoring it
+--32679--     old: 0x04020d40 (strlen              ) R-> (0000.0) 0x580608c1 ???
+--32679--     new: 0x04020d40 (strlen              ) R-> (2007.0) 0x04c34db0 strlen
+--32679-- REDIR: 0x401d560 (ld-linux-x86-64.so.2:strcmp) redirected to 0x4c35ee0 (strcmp)
+--32679-- REDIR: 0x4021280 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4c394f0 (mempcpy)
+--32679-- Reading syms from /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25
+--32679--    object doesn't have a symbol table
+--32679-- Reading syms from /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0
+--32679--    object doesn't have a symbol table
+--32679-- Reading syms from /lib/x86_64-linux-gnu/libc-2.27.so
+--32679--   Considering /lib/x86_64-linux-gnu/libc-2.27.so ..
+--32679--   .. CRC mismatch (computed eabd4889 wanted a033e032)
+--32679--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libc-2.27.so ..
+--32679--   .. CRC is valid
+--32679-- Reading syms from /lib/x86_64-linux-gnu/libm-2.27.so
+--32679--   Considering /lib/x86_64-linux-gnu/libm-2.27.so ..
+--32679--   .. CRC mismatch (computed 4fa27e7c wanted 85c547d3)
+--32679--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libm-2.27.so ..
+--32679--   .. CRC is valid
+--32679-- Reading syms from /lib/x86_64-linux-gnu/libgcc_s.so.1
+--32679--    object doesn't have a symbol table
+--32679-- Reading syms from /lib/x86_64-linux-gnu/libdl-2.27.so
+--32679--   Considering /lib/x86_64-linux-gnu/libdl-2.27.so ..
+--32679--   .. CRC mismatch (computed b1307459 wanted be68b2a8)
+--32679--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libdl-2.27.so ..
+--32679--   .. CRC is valid
+--32679-- Reading syms from /lib/x86_64-linux-gnu/libpthread-2.27.so
+--32679--   Considering /usr/lib/debug/.build-id/ae/13b309b7de1cc2b1cbc7605fc174dac01a90fc.debug ..
+--32679--   .. build-id is valid
+--32679-- REDIR: 0x5494b70 (libc.so.6:memmove) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--32679-- REDIR: 0x5493e80 (libc.so.6:strncpy) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--32679-- REDIR: 0x5494e50 (libc.so.6:strcasecmp) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--32679-- REDIR: 0x54938d0 (libc.so.6:strcat) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--32679-- REDIR: 0x5493eb0 (libc.so.6:rindex) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--32679-- REDIR: 0x54965a0 (libc.so.6:rawmemchr) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--32679-- REDIR: 0x5494ce0 (libc.so.6:mempcpy) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--32679-- REDIR: 0x5494b10 (libc.so.6:bcmp) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--32679-- REDIR: 0x5493e40 (libc.so.6:strncmp) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--32679-- REDIR: 0x5493940 (libc.so.6:strcmp) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--32679-- REDIR: 0x5494c40 (libc.so.6:memset) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--32679-- REDIR: 0x54b1ed0 (libc.so.6:wcschr) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--32679-- REDIR: 0x5493de0 (libc.so.6:strnlen) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--32679-- REDIR: 0x54939b0 (libc.so.6:strcspn) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--32679-- REDIR: 0x5494ea0 (libc.so.6:strncasecmp) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--32679-- REDIR: 0x5493980 (libc.so.6:strcpy) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--32679-- REDIR: 0x5494fe0 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--32679-- REDIR: 0x5493ee0 (libc.so.6:strpbrk) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--32679-- REDIR: 0x5493900 (libc.so.6:index) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--32679-- REDIR: 0x5493db0 (libc.so.6:strlen) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--32679-- REDIR: 0x549e4a0 (libc.so.6:memrchr) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--32679-- REDIR: 0x5494ef0 (libc.so.6:strcasecmp_l) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--32679-- REDIR: 0x5494ae0 (libc.so.6:memchr) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--32679-- REDIR: 0x54b2c90 (libc.so.6:wcslen) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--32679-- REDIR: 0x5494190 (libc.so.6:strspn) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--32679-- REDIR: 0x5494e20 (libc.so.6:stpncpy) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--32679-- REDIR: 0x5494df0 (libc.so.6:stpcpy) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--32679-- REDIR: 0x54965d0 (libc.so.6:strchrnul) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--32679-- REDIR: 0x5494f40 (libc.so.6:strncasecmp_l) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--32679-- REDIR: 0x5584300 (libc.so.6:__strrchr_avx2) redirected to 0x4c34730 (rindex)
+--32679-- REDIR: 0x55844d0 (libc.so.6:__strlen_avx2) redirected to 0x4c34cf0 (strlen)
+--32679-- REDIR: 0x548d140 (libc.so.6:malloc) redirected to 0x4c31aa0 (malloc)
+--32679-- REDIR: 0x5584a10 (libc.so.6:__memcpy_avx_unaligned_erms) redirected to 0x4c386e0 (memmove)
+--32679-- REDIR: 0x548da30 (libc.so.6:free) redirected to 0x4c32cd0 (free)
+--32679-- REDIR: 0x5584e90 (libc.so.6:__memset_avx2_unaligned_erms) redirected to 0x4c385d0 (memset)
+--32679-- REDIR: 0x5580ae0 (libc.so.6:__memcmp_avx2_movbe) redirected to 0x4c37e00 (bcmp)
+--32679-- REDIR: 0x549fc50 (libc.so.6:__strcmp_sse2_unaligned) redirected to 0x4c35da0 (strcmp)
+--32679-- REDIR: 0x4ed1280 (libstdc++.so.6:operator new(unsigned long)) redirected to 0x4c32110 (operator new(unsigned long))
+--32679-- REDIR: 0x548ed70 (libc.so.6:realloc) redirected to 0x4c33cb0 (realloc)
+--32679-- REDIR: 0x5490170 (libc.so.6:calloc) redirected to 0x4c33a70 (calloc)
+--32679-- REDIR: 0x5584110 (libc.so.6:__strchrnul_avx2) redirected to 0x4c39020 (strchrnul)
+--32679-- REDIR: 0x55849f0 (libc.so.6:__mempcpy_avx_unaligned_erms) redirected to 0x4c39130 (mempcpy)
+--32679-- REDIR: 0x4ecf390 (libstdc++.so.6:operator delete(void*)) redirected to 0x4c331d0 (operator delete(void*))
+==32679== 
+==32679== HEAP SUMMARY:
+==32679==     in use at exit: 69,608 bytes in 8,020 blocks
+==32679==   total heap usage: 16,016 allocs, 7,996 frees, 304,040 bytes allocated
+==32679== 
+==32679== Searching for pointers to 8,020 not-freed blocks
+==32679== Checked 58,852,648 bytes
+==32679== 
+==32679== 8 bytes in 1 blocks are still reachable in loss record 1 of 12
+==32679==    at 0x4C31B0F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==32679==    by 0x51D0AB8: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==32679==    by 0x51DFA86: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==32679==    by 0x51CF08A: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==32679==    by 0x40108F2: call_init (dl-init.c:72)
+==32679==    by 0x40108F2: _dl_init (dl-init.c:119)
+==32679==    by 0x40010C9: ??? (in /lib/x86_64-linux-gnu/ld-2.27.so)
+==32679== 
+==32679== 8 bytes in 1 blocks are indirectly lost in loss record 2 of 12
+==32679==    at 0x4C3217F: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==32679==    by 0x1090DB: enqueue(int) (bucket_queue2.cpp:159)
+==32679==    by 0x10A0EF: main._omp_fn.0 (bucket_queue2.cpp:307)
+==32679==    by 0x51D4EDE: GOMP_parallel (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==32679==    by 0x10A040: main (bucket_queue2.cpp:303)
+==32679== 
+==32679== 8 bytes in 1 blocks are definitely lost in loss record 3 of 12
+==32679==    at 0x4C3217F: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==32679==    by 0x108F5A: init_queue() (bucket_queue2.cpp:141)
+==32679==    by 0x10A010: main (bucket_queue2.cpp:298)
+==32679== 
+==32679== 24 (16 direct, 8 indirect) bytes in 1 blocks are definitely lost in loss record 4 of 12
+==32679==    at 0x4C3217F: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==32679==    by 0x10907B: enqueue(int) (bucket_queue2.cpp:153)
+==32679==    by 0x10A0EF: main._omp_fn.0 (bucket_queue2.cpp:307)
+==32679==    by 0x51D4EDE: GOMP_parallel (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==32679==    by 0x10A040: main (bucket_queue2.cpp:303)
+==32679== 
+==32679== 56 bytes in 7 blocks are indirectly lost in loss record 5 of 12
+==32679==    at 0x4C3217F: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==32679==    by 0x1090DB: enqueue(int) (bucket_queue2.cpp:159)
+==32679==    by 0x10A0EF: main._omp_fn.0 (bucket_queue2.cpp:307)
+==32679==    by 0x51DD96D: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==32679==    by 0x5FA86DA: start_thread (pthread_create.c:463)
+==32679==    by 0x551771E: clone (clone.S:95)
+==32679== 
+==32679== 72 bytes in 1 blocks are still reachable in loss record 6 of 12
+==32679==    at 0x4C31A3F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==32679==    by 0x4C33D84: realloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==32679==    by 0x51D0B08: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==32679==    by 0x51DE82E: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==32679==    by 0x51D4ED9: GOMP_parallel (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==32679==    by 0x10A040: main (bucket_queue2.cpp:303)
+==32679== 
+==32679== 168 (112 direct, 56 indirect) bytes in 7 blocks are definitely lost in loss record 7 of 12
+==32679==    at 0x4C3217F: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==32679==    by 0x10907B: enqueue(int) (bucket_queue2.cpp:153)
+==32679==    by 0x10A0EF: main._omp_fn.0 (bucket_queue2.cpp:307)
+==32679==    by 0x51DD96D: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==32679==    by 0x5FA86DA: start_thread (pthread_create.c:463)
+==32679==    by 0x551771E: clone (clone.S:95)
+==32679== 
+==32679== 192 bytes in 1 blocks are still reachable in loss record 8 of 12
+==32679==    at 0x4C31B0F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==32679==    by 0x51D0AB8: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==32679==    by 0x51DDB55: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==32679==    by 0x51D4EC5: GOMP_parallel (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==32679==    by 0x10A040: main (bucket_queue2.cpp:303)
+==32679== 
+==32679== 2,128 bytes in 7 blocks are possibly lost in loss record 9 of 12
+==32679==    at 0x4C33B25: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==32679==    by 0x4013666: allocate_dtv (dl-tls.c:286)
+==32679==    by 0x4013666: _dl_allocate_tls (dl-tls.c:530)
+==32679==    by 0x5FA9227: allocate_stack (allocatestack.c:627)
+==32679==    by 0x5FA9227: pthread_create@@GLIBC_2.2.5 (pthread_create.c:644)
+==32679==    by 0x51DDF5F: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==32679==    by 0x51D4ED9: GOMP_parallel (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==32679==    by 0x10A040: main (bucket_queue2.cpp:303)
+==32679== 
+==32679== 3,072 bytes in 1 blocks are still reachable in loss record 10 of 12
+==32679==    at 0x4C31B0F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==32679==    by 0x51D0AB8: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==32679==    by 0x51DD9D7: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==32679==    by 0x51D4EC5: GOMP_parallel (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==32679==    by 0x10A040: main (bucket_queue2.cpp:303)
+==32679== 
+==32679== 7,992 bytes in 999 blocks are definitely lost in loss record 11 of 12
+==32679==    at 0x4C3217F: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==32679==    by 0x1090DB: enqueue(int) (bucket_queue2.cpp:159)
+==32679==    by 0x10A0EF: main._omp_fn.0 (bucket_queue2.cpp:307)
+==32679==    by 0x51D4EDE: GOMP_parallel (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==32679==    by 0x10A040: main (bucket_queue2.cpp:303)
+==32679== 
+==32679== 55,944 bytes in 6,993 blocks are definitely lost in loss record 12 of 12
+==32679==    at 0x4C3217F: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==32679==    by 0x1090DB: enqueue(int) (bucket_queue2.cpp:159)
+==32679==    by 0x10A0EF: main._omp_fn.0 (bucket_queue2.cpp:307)
+==32679==    by 0x51DD96D: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+==32679==    by 0x5FA86DA: start_thread (pthread_create.c:463)
+==32679==    by 0x551771E: clone (clone.S:95)
+==32679== 
+==32679== LEAK SUMMARY:
+==32679==    definitely lost: 64,072 bytes in 8,001 blocks
+==32679==    indirectly lost: 64 bytes in 8 blocks
+==32679==      possibly lost: 2,128 bytes in 7 blocks
+==32679==    still reachable: 3,344 bytes in 4 blocks
+==32679==         suppressed: 0 bytes in 0 blocks
+==32679== 
+==32679== ERROR SUMMARY: 6 errors from 6 contexts (suppressed: 0 from 0)
+==32679== ERROR SUMMARY: 6 errors from 6 contexts (suppressed: 0 from 0)

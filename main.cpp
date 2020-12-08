@@ -43,5 +43,7 @@ while(filler != 0){
 	filler = filler - 1;			
 	}
 	//cout<<count;
+	delete(location_fc);
+	delete(location);
 	return 0;
 }
