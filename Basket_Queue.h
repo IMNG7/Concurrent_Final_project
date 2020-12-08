@@ -6,14 +6,16 @@ using namespace std;
 
 class pointer_t;
 
-class node{
+class node
+{
 public:
 	int val;
 	pointer_t *next;
 	node(int number){val = number;}
 };
 
-class pointer_t{
+class pointer_t
+{
 public:
 	node* get_ptr();
 	int get_tag();
@@ -24,7 +26,8 @@ public:
 	atomic <unsigned long long> cnt_ptr_var;
 };
 
-class queue{
+class queue
+{
 public:
 
 pointer_t head;

@@ -165,9 +165,9 @@ int main(int argc, char *args[])
 
 void help_menu()
 {
-	cout<<"    After the compilation of the program, you can use the ./mysort instruction on the command line, to execute the program. There are 4 arguments you can give to the ./mysort instruction. These are Stack and Queue(-s with various stacks and queues) to give the give the type of stack and queue used, algorithm(with varible -a) required to give type of  optimization algorithm  used and help(-h) to display the help menu.  
-    \n\r-s can take 5 different value, sglst for sgl stack, sglqu for sgl queue, treiberst for treiber stack, msqu for  M& SQueue,bsqu for Basket Queue. By giving these variables , we can use the type of stack or queue we want to use. By default, if nothing is given, we will use SGL Stack. 
-    \n\rHelp will display the help menu for the types of arguments, and what values can be given. 
-    \n\rLast is the algorithm with variable --alg, it can take two values, one is fc and other is elim, according to the value they will perform flat combining algorithm on stack and queue and b. If something else is given, or nothing is given, if nothing given, none will be set by default. 
-    \n\rThere are only few combinations possible for algos, if Elimination is given, then only trieber stack or SGL stack will be used, else it will exi.t. Similarly, if Flat Combining is given, only SGL stack and SGL queue can be given. "
+	cout<<"\n\rAfter the compilation of the program, you can use the ./mysort instruction on the command line, to execute the program. There are 4 arguments you can give to the ./mysort instruction. These are Stack and Queue(-s with various stacks and queues) to give the give the type of stack and queue used, algorithm(with varible -a) required to give type of  optimization algorithm  used and help(-h) to display the help menu." ;
+    cout<<"\n\r-s can take 5 different value, sglst for sgl stack, sglqu for sgl queue, treiberst for treiber stack, msqu for  M& SQueue,bsqu for Basket Queue. By giving these variables , we can use the type of stack or queue we want to use. By default, if nothing is given, we will use SGL Stack. ";
+    cout<<"\n\rHelp will display the help menu for the types of arguments, and what values can be given. ";
+    cout<<"\n\rLast is the algorithm with variable --alg, it can take two values, one is fc and other is elim, according to the value they will perform flat combining algorithm on stack and queue and b. If something else is given, or nothing is given, if nothing given, none will be set by default. ";
+    cout<<"\n\rThere are only few combinations possible for algos, if Elimination is given, then only trieber stack or SGL stack will be used, else it will exi.t. Similarly, if Flat Combining is given, only SGL stack and SGL queue can be given.\n\r";
 }

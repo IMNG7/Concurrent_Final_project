@@ -11,7 +11,5 @@ void StackOp_fc(ThreadInfo* p);
 void LesOP_fc(ThreadInfo *p,int mypid);
 bool TryPerformStackOp_fc(ThreadInfo *p);
 void FinishCollision_fc(ThreadInfo *p,int mypid);
-// bool TryCollision(ThreadInfo*p,ThreadInfo *q,int mypid);
-// int GetPosition();
 void delay_fc();
 #endif
